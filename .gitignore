@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.test-build/
+public/engine/*.js
+public/engine/*.wasm
+public/engine/build.json
+*.zip
+*.vsm
+*.pla
+*.log
+.work/

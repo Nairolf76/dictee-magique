@@ -1,0 +1,13 @@
+{
+  "mame": "0.289",
+  "revision": "f34f02505e32c1993c6a782b6814232cbfc74e36",
+  "emscripten": "3.1.74",
+  "sha256": {
+    "dictee.js": "e90ea6498a9cf08ec1acd7bc56557ad8c0f117fdbf24772304069392c78e5622",
+    "dictee.wasm": "6fe7d97c59b35d27c6f7b53d9c274cdc7a5400412e47ab3fab986e0c00e25452"
+  },
+  "features": [
+    "speech-events",
+    "modern-talk-status"
+  ]
+}

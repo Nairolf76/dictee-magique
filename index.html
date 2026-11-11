@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head><link rel="icon" href="data:,"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#eee9dc"><meta name="description" content="Retrouvez La Dictée magique de 1981 dans votre navigateur. Une réplique française avec le programme et la voix du jouet original."><title>La Dictée magique · 1981</title></head>
+<body>
+<a class="skip-link" href="#controls">Passer aux commandes</a>
+<header class="page-header"><a class="collection" href="./" aria-label="La Dictée magique, accueil"><span class="collection-mark">dm.</span><span>LES OBJETS<br>QUI PARLENT</span></a><span class="edition">ÉDITION FRANÇAISE <span>—</span> 1981</span><a href="#about" class="about-link">À propos <span>↗</span></a></header>
+<main>
+<div class="intro"><span class="eyebrow">UN PETIT VOYAGE DANS LES ANNÉES 80</span><h1>Tu joues. <em>Je parle.</em></h1><p>La voix, les touches, les souvenirs. À toi de jouer.</p></div>
+<div class="experience">
+<section class="stage" aria-label="Réplique de La Dictée magique">
+<div class="toy" id="toy" tabindex="-1">
+<div class="handle" aria-hidden="true"></div>
+<div class="fascia"><div class="speaker" aria-hidden="true"></div><div class="display-panel"><div class="display" id="display" role="img" aria-label="Afficheur à huit caractères du jouet"></div><span class="ti-wordmark">TEXAS INSTRUMENTS</span></div></div>
+<div class="yellow-panel"><div class="keyboard-frame"><div class="keyboard" id="keys" role="group" aria-label="Clavier du jouet"></div></div><div class="toy-brand" aria-label="La Dictée magique"><span>La Dictée</span><strong>Magique</strong><i aria-hidden="true">✧</i></div><div class="toy-caption">Speak & Spell™</div></div><div class="case-seam" aria-hidden="true"></div>
+</div>
+<div class="object-note"><span class="note-line"></span> TEXAS INSTRUMENTS · LA DICTÉE MAGIQUE <span class="note-line"></span></div>
+</section>
+<aside class="controls" id="controls" aria-label="Commandes de la réplique">
+<div class="control-top"><span class="eyebrow">COMME AU PREMIER JOUR</span><span class="serial">Nº 01</span></div>
+<h2>On l’allume ?</h2><p class="control-description">Retrouve la voix du jouet original avec ta ROM française.</p>
+<label class="upload" for="rom"><span class="upload-icon" aria-hidden="true">＋</span><span id="file-label">Choisir ma ROM <small>Une archive .zip</small></span><input id="rom" type="file" accept=".zip,application/zip"></label>
+<p class="local-note"><span aria-hidden="true">⌁</span> <span id="storage-note">Ta ROM sera mémorisée sur cet appareil, sans téléversement.</span></p>
+<button id="forget-rom" class="text-button" type="button" hidden>Effacer ma ROM mémorisée</button>
+<button class="primary" id="start" disabled>Marche · jouer avec le son</button>
+<p id="status" class="status" role="status" aria-live="polite">Choisis une ROM française pour commencer.</p>
+<div class="audio-controls"><button id="audio" class="secondary" hidden disabled><span aria-hidden="true">♪</span> Activer le son</button><label class="volume" for="volume">Volume <input id="volume" type="range" min="0" max="100" value="70"></label></div>
+<div class="voice-controls"><label for="voice">Voix<select id="voice"><option value="original">Voix d’origine · 1981</option></select></label><button id="preview-voice" class="secondary" type="button" disabled>Écouter</button><p id="voice-note">La voix d’origine du jouet.</p></div>
+
+<button id="fullscreen" class="text-button fullscreen-entry" aria-pressed="false">⛶ &nbsp; Plein écran</button>
+<button id="reset" class="text-button" disabled>↻ &nbsp; Recommencer</button>
+<details class="guide" open><summary>La règle du jeu <span aria-hidden="true">＋</span></summary><ol><li>Choisis un niveau avec <b>A, B, C ou D</b>.</li><li>Appuie sur <b>Départ</b>, puis écoute le mot.</li><li>Écris-le et valide avec <b>Essaie</b>.</li></ol><p>Une hésitation ? Appuie sur <b>Répète</b>.<br>Attends la fin de la voix entre deux commandes.</p></details>
+<details class="guide"><summary>Clavier et autres jeux <span aria-hidden="true">＋</span></summary><p>Utilise les lettres de ton clavier. <b>Entrée</b> = Essaie, <b>Retour arrière</b> = Efface, <b>1</b> = Départ, <b>3</b> = Répète, <b>9</b> = Marche et <b>F2</b> = Arrêt.</p><p>Les touches Mot mystère, Code secret, Lettre et Dis-le donnent accès aux autres jeux. Les modules supplémentaires ne sont pas inclus.</p></details>
+</aside>
+</div>
+<section id="about" class="about"><p class="eyebrow">UNE PETITE CAPSULE TEMPORELLE</p><h2>Une machine. Des centaines de souvenirs.</h2><p>Une réplique non officielle du modèle français de 1981, redessinée pour le web. Son programme original est exécuté par MAME, avec la voix d’époque ou une voix moderne au choix. Code original sous licence MIT ; ROM non fournie. Sans compte ni suivi.</p><p class="fine-print">Texas Instruments et Speak & Spell sont des marques de leurs propriétaires. Projet indépendant, sans affiliation. Le moteur MAME signale une émulation sonore imparfaite.</p><p class="fine-print"><a href="https://github.com/Nairolf76/dictee-magique">Sources et licences</a> · <a href="licenses/mame/COPYING">Licence du moteur</a></p></section>
+</main>
+<footer><span>FABRIQUÉ POUR LE PLAISIR DE RETROUVER.</span><span>1981 ↔ 2026</span></footer>
+<button id="leave-fullscreen" class="leave-fullscreen" type="button" aria-label="Quitter le plein écran (Échap)" title="Quitter le plein écran · Échap" hidden>⤡</button>
+<canvas id="canvas" class="engine-canvas" width="640" height="220" tabindex="-1" aria-hidden="true"></canvas>
+<script type="module" src="/src/main.ts"></script>
+</body></html>
