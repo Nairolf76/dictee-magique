@@ -108,9 +108,21 @@ téléversement de l'archive. Effacement, deuxième rechargement et import ZIP c
 contrôlés. Stockage refusé simulé : la session reste jouable avec explication visible.
 Mobile Chromium simulé (390 × 844) : Marche tactile active le jeu et le son, aucun
 débordement horizontal. Playwright utilisé car le plugin Browser n'est pas disponible.
-Les 37 tests et le build passent. Vérification publique à compléter après publication.
+Les 37 tests et le build passent. Vérification publique terminée : voir ci-dessous.
 
 Essais complémentaires : refus audio simulé puis activation réussie via Réessayer ;
 entrée IndexedDB de type invalide détectée puis effacée. Le build statique servi
 sous /dictee-magique/ charge les deux fichiers du moteur et affiche les segments,
 sans erreur de console. Une éventuelle 404 de favicon a été supprimée.
+
+## Publication GitHub Pages
+
+https://nairolf76.github.io/dictee-magique/ répond en HTTP 200. Le déploiement
+GitHub est terminé avec succès. Import local, gain nul avant Marche puis contexte
+audio actif et gain 0,7, Départ, rechargement de ROM mémorisée et effacement ont été
+vérifiés sur cette adresse. Un analyseur après gain mesure une crête audio de 0,395
+pendant la consigne. Aucune erreur applicative de console ni requête POST n'est
+observée. Le parcours tactile est vérifié en Chromium mobile simulé, sans débordement.
+Le script de récupération du moteur publié vérifie les deux SHA-256 attendus.
+La release v0.1.0 inclut les sources MAME modifiées et les archives sources des ports
+liés, sans ROM. Les fichiers distribués sont contrôlés par audit-dist.mjs.
