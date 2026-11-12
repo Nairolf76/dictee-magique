@@ -27,7 +27,10 @@ export function decodeSpeechDictionary(rom: Uint8Array) {
     const packet=read(header);
     if(packet)announcement(read(packet),'Écris le mot suivant.');
   }
-  announcement(read(0x5c),'Bravo !');
+  // The French program cycles through four success recordings. Mapping only
+  // the first makes the following correct answers silent in modern mode.
+  const congratulations=['Bravo !','Bien joué !','C’est le bon mot !','Très bien !'];
+  congratulations.forEach((text,i)=>announcement(read(0x5c+i*2),text));
   announcement(read(0x64),'Ce n’est pas le bon mot. Essaie encore.');
   const correction=read(0x46);
   if(correction){

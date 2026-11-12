@@ -36,3 +36,12 @@ ni extraction de voix d'une vidéo n'est nécessaire.
 - [Web Speech API](https://webaudio.github.io/web-speech-api/) : choix des voix, langue, volume et événements de fin/erreur.
 - [Format historique des ROM, furrtek](https://github.com/furrtek/SpeakAndSpellTi/blob/master/rom.txt) : référence de recherche. Le modèle français diffère du modèle américain ; ses tables ont été vérifiées sur la ROM chargée (alphabet à 0x10, nombres à 0x70). Aucun code de ce dépôt n'est repris.
 - Les voix ne sont pas redistribuées : elles sont fournies par le navigateur ou le système. Leur disponibilité et leurs conditions dépendent de leur fournisseur.
+
+## Aide à l’import publiée
+
+Le [catalogue officiel MAME](https://www.mamedev.org/roms/) ne propose pas snspellfr.
+La [fiche française Planet Emulation](https://www.planetemu.net/rom/mame-roms-merged/snspellfr)
+indique une archive merged snspell.zip regroupant les variantes. Le lien présent
+dans l’aide ouvre cette fiche tierce ; aucun téléchargement n’est automatisé.
+La disponibilité publique n’établit pas un droit de redistribution. Le projet
+ne fournit, ne copie et n’héberge pas la ROM. Consultation : 11 novembre 2026.

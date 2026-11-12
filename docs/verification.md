@@ -126,3 +126,22 @@ observée. Le parcours tactile est vérifié en Chromium mobile simulé, sans d�
 Le script de récupération du moteur publié vérifie les deux SHA-256 attendus.
 La release v0.1.0 inclut les sources MAME modifiées et les archives sources des ports
 liés, sans ROM. Les fichiers distribués sont contrôlés par audit-dist.mjs.
+
+## Félicitations modernes et aide à l’import
+
+Reproduction avec la vraie voix Microsoft Julie : les quatre bonnes réponses
+successives déclenchent les adresses 0x80b, 0x872, 0x8c6 et 0x955 de CD2352,
+pointées par les entrées 0x5c, 0x5e, 0x60 et 0x62. Seule la première était
+associée à un texte moderne ; les trois suivantes restaient silencieuses.
+Les quatre entrées sont désormais des félicitations modernes distinctes.
+Une nouvelle série de quatre bonnes réponses atteint la fin de chaque synthèse
+Julie : Bravo, Bien joué, C’est le bon mot, Très bien. Gain original constamment
+nul, aucune erreur de console. Deux tests de régression portent sur les quatre
+correspondances et leur passage au lecteur moderne. Les 39 tests passent.
+
+Le catalogue officiel mamedev.org/roms ne contient pas la version française.
+L’aide à l’import fournit le modèle snspellfr et un lien externe vers sa fiche
+Planet Emulation. Cette fiche indique une archive merged snspell.zip ; le nom
+n’est pas un critère de validation. Aucun téléchargement automatique ni fichier
+ROM ajouté au site. Contrôle du lien et de l’aide dépliée sur bureau et mobile
+Chromium simulé (390 × 844) : aucun débordement ni erreur applicative.

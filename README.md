@@ -124,3 +124,13 @@ Sources : https://github.com/Nairolf76/dictee-magique
 
 Le développement applicatif a été réalisé avec OpenAI Codex sous la direction du
 mainteneur. Les vérifications et limites sont décrites dans docs/verification.md.
+
+## Aide à l’import et félicitations
+
+L’aide près du sélecteur de fichier renvoie vers la fiche snspellfr sur Planet
+Emulation (site tiers). Son archive merged peut s’appeler snspell.zip ; le validateur
+reconnaît le contenu français par ses empreintes, indépendamment du nom du ZIP.
+MAME ne propose pas cette ROM dans son catalogue officiel de téléchargements.
+Aucun téléchargement tiers automatique ni hébergement de ROM n’est ajouté.
+Les quatre variantes de réussite du programme français ont des félicitations
+modernes distinctes. Le canal audio original reste coupé en mode moderne.

@@ -6,3 +6,15 @@ test('an unknown ROM cue cannot interrupt an active modern utterance',()=>{const
 test('failed modern speech stays silent until a deliberate retry or selection',()=>{const f=fixture();f.player.onSpeech(42);f.jobs[0].onerror?.();f.player.onSpeech(42);assert.equal(f.jobs.length,1);assert.equal(f.gain.at(-1),0);f.player.preview();assert.equal(f.jobs.length,2);f.player.cancel();});
 test('only explicit original selection restores the ROM gain',()=>{const f=fixture();f.player.onSpeech(999);f.player.setVolume(.4);assert.equal(f.gain.at(-1),0);f.player.setVoice(null);assert.equal(f.gain.at(-1),.4);f.player.cancel();});
 test('announcements use modern synthesis just like words',()=>{const f=fixture();f.player.setDictionary(new Map([[7,{text:'Bravo !',kind:'announcement'}]]));f.player.onSpeech(7);assert.equal(f.jobs[0].text,'Bravo !');assert.equal(f.gain.at(-1),0);f.jobs[0].onend?.();f.player.cancel();});
+
+test('every success variant is spoken with the modern voice while original gain stays zero',()=>{
+  const texts=['Bravo !','Bien joué !','C’est le bon mot !','Très bien !'];
+  const spoken:SpeechJob[]=[],gains:number[]=[];
+  const player=new ModernVoice({create:text=>({text,onend:null,onerror:null}),speak:job=>spoken.push(job),cancel:()=>{}},v=>gains.push(v),()=>{});
+  player.setVoice({voiceURI:'fr',lang:'fr-FR'} as SpeechSynthesisVoice);
+  player.setEnabled(true);
+  player.setDictionary(new Map(texts.map((text,i)=>[i+1,{text,kind:'announcement' as const}])));
+  for(let i=1;i<=4;i++){player.onSpeech(i);spoken.at(-1)!.onend?.();}
+  assert.deepEqual(spoken.map(job=>job.text),texts);
+  assert.ok(gains.every(gain=>gain===0));player.cancel();
+});

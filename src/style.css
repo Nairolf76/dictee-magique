@@ -26,3 +26,5 @@ body.immersive .toy{transform:none;max-width:none}
 .voice-controls p{grid-column:1/-1;font-size:10px;color:#656c5b;line-height:1.5;margin:0 0 7px}
 
 [hidden]{display:none!important}
+
+.rom-help{margin:12px 0 16px}.rom-help a{font-weight:700;text-underline-offset:3px}

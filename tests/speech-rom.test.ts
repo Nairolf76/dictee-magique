@@ -28,3 +28,12 @@ test('maps the French question and correction announcements',()=>{const rom=fixt
 test('sends the actual letter N to French voices instead of the ambiguous spelling enne',()=>{const rom=fixture();new DataView(rom.buffer).setUint16(0x10+13*2,0x800,true);const cue=decodeSpeechDictionary(rom).cues.get(0x800);assert.equal(cue?.kind,'letter');assert.equal(cue?.text,'N');});
 
 test('sends all 26 actual letters to the French voice, including F and J',()=>{const rom=fixture();const view=new DataView(rom.buffer);const letters=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];letters.forEach((letter,i)=>view.setUint16(0x10+i*2,0x800+i*32,true));const cues=decodeSpeechDictionary(rom).cues;for(const [i,letter] of letters.entries()){assert.equal(cues.get(0x800+i*32)?.kind,'letter');assert.equal(cues.get(0x800+i*32)?.text,letter);}});
+
+test('maps all four French success variants instead of muting later correct answers',()=>{
+  const rom=fixture(),view=new DataView(rom.buffer);
+  const addresses=[0x800,0x872,0x8c6,0x955];
+  addresses.forEach((address,i)=>view.setUint16(0x5c+i*2,address,true));
+  const cues=decodeSpeechDictionary(rom).cues;
+  const phrases=['Bravo !','Bien joué !','C’est le bon mot !','Très bien !'];
+  addresses.forEach((address,i)=>assert.deepEqual(cues.get(address),{text:phrases[i],kind:'announcement'}));
+});
