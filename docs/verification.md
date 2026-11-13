@@ -212,3 +212,6 @@ système. Un navigateur peut effacer IndexedDB : l’export reste la sauvegarde.
 Pictogrammes vectoriels des dix touches de fonction, légendes jaunes, fonctions rouges, lettres orange et voyelles jaunes comparés aux photos Etsy. Le logo français, la main magique, les étoiles et le bloc TI/Speak & Spell sont replacés en bas de la façade, selon une seule variante historique. Aucun fichier photo ni fonte tierce embarqué. La typographie repose sur les fontes système et les contours de marques sont des approximations visuelles, pas des fichiers officiels.
 
 Contrôles Chromium bureau et mobile simulé : quarante touches et leurs noms accessibles conservés, dix pictogrammes SVG, actions de révision et champs complets opérationnels ; plein écran et absence de débordement vérifiés. Les deux SVG sont servis depuis le sous-dossier /dictee-magique/ sans requête de fonte externe.
+
+
+Publication vérifiée le 12 novembre 2026 (heure locale) : https://nairolf76.github.io/dictee-magique/ ; sources 0272821, build Pages 6ea440f. Déploiement 43347034351 réussi. Les SVG et modèles répondent en HTTP 200. Exercice sans ROM, correction, import privé des six listes scolaires (50 entrées) et rechargement validés sur le site public ; aucune requête POST ni erreur applicative observée.
