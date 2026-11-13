@@ -1,8 +1,14 @@
+import { appendKeyArt } from './key-art';
+import {setupPractice} from './practice-ui';
+import {setupCartridges,selectedCartridge} from './cartridge-ui';
+import './practice.css';
 import { RomStorage } from './rom-storage';
 import { setupVoiceControls } from './voice-ui';
-import { decodeSpeechDictionary } from './speech-rom';
+import { decodeSpeechDictionary,decodeCartridgeDictionary } from './speech-rom';
 import type { ModernVoice } from './modern-voice';
 import './style.css';
+import './branding.css';
+import './key-art.css';
 import { setupFullscreen } from './fullscreen';
 import { validateRom } from './rom';
 import { DicteeEngine } from './engine';
@@ -14,9 +20,11 @@ const $ = <T extends HTMLElement>(selector: string) => document.querySelector<T>
 const status=$('#status'), start=$<HTMLButtonElement>('#start'), file=$<HTMLInputElement>('#rom');
 const audio=$<HTMLButtonElement>('#audio'), reset=$<HTMLButtonElement>('#reset'), volume=$<HTMLInputElement>('#volume');
 const display = new SegmentDisplay($('#display'));
+let practiceActive=false;
+let practice:ReturnType<typeof setupPractice>|undefined;
 let modernVoice: ModernVoice | undefined;
 const engine = new DicteeEngine($('#canvas'), (i,mask)=>display.update(i,mask), address=>modernVoice?.onSpeech(address));
-modernVoice=setupVoiceControls(value=>engine.volume(value),value=>engine.setSpeechBusy(value),text=>message(text));
+modernVoice=setupVoiceControls(value=>engine.volume(practiceActive?0:value),value=>engine.setSpeechBusy(value),text=>message(text));
 const storage=new RomStorage();
 const forget=$<HTMLButtonElement>('#forget-rom');
 let ready=false, prepared=false, activating=false, importSequence=0;
@@ -46,14 +54,11 @@ for(const spec of KEYS){
   button.className='toy-key'+(spec.function?' function':'')+(spec.vowel?' vowel':'');
   button.setAttribute('aria-label',spec.label);button.title=spec.label+' · '+spec.keyboard;
   button.dataset.row=String(spec.row);button.dataset.mask=String(spec.mask);
-  const symbol=document.createElement('span');symbol.textContent=spec.symbol;button.append(symbol);
-  if(spec.function && !['Arrêt','Départ'].includes(spec.label)){
-    const legend=document.createElement('span');legend.className='legend';legend.textContent=spec.label.toUpperCase();button.append(legend);
-  }
-  button.addEventListener('pointerdown',e=>{e.preventDefault();if(!ready&&spec.keyboard==='9'){void activate();return;}button.setPointerCapture(e.pointerId);press('pointer:'+e.pointerId,spec.row,spec.mask);});
+  appendKeyArt(button,spec);
+  button.addEventListener('pointerdown',e=>{e.preventDefault();if(practiceActive){practice?.toyKey(spec.keyboard);return;}if(!ready&&spec.keyboard==='9'){void activate();return;}button.setPointerCapture(e.pointerId);press('pointer:'+e.pointerId,spec.row,spec.mask);});
   for(const event of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(event,e=>release('pointer:'+(e as PointerEvent).pointerId));
   // Native keyboard/assistive clicks have no mouse click count.
-  button.addEventListener('click',e=>{if(e.detail===0){if(!ready&&spec.keyboard==='9'){void activate();return;}const id='accessible:'+spec.label;press(id,spec.row,spec.mask);release(id);}});
+  button.addEventListener('click',e=>{if(e.detail===0){if(practiceActive){practice?.toyKey(spec.keyboard);return;}if(!ready&&spec.keyboard==='9'){void activate();return;}const id='accessible:'+spec.label;press(id,spec.row,spec.mask);release(id);}});
   buttons.set(`${spec.row}:${spec.mask}`,button);$('#keys').append(button);
 }
 async function prepare(bytes:Uint8Array,restored:boolean,sequence:number) {
@@ -61,7 +66,10 @@ async function prepare(bytes:Uint8Array,restored:boolean,sequence:number) {
   const result=await validateRom(bytes);
   if(sequence!==importSequence)return;
   file.disabled=true;
-  modernVoice?.setDictionary(decodeSpeechDictionary(result.files['cd2352']).cues);
+  const cartridge=await selectedCartridge();
+  const dictionary=decodeSpeechDictionary(result.files['cd2352']).cues;
+  if(cartridge)for(const [address,cue] of decodeCartridgeDictionary(cartridge.bytes).cues)dictionary.set(address,cue);
+  modernVoice?.setDictionary(dictionary);
   let saved=restored;
   if(!restored){
     try{await storage.save(result.zip);saved=true;}
@@ -72,9 +80,10 @@ async function prepare(bytes:Uint8Array,restored:boolean,sequence:number) {
   message('La Dictée se prépare en silence…');
   start.textContent='Chargement…';
   try{
-    await engine.start(result.zip);prepared=true;
+    await engine.start(result.zip,cartridge?.bytes);prepared=true;
     start.disabled=false;start.textContent='Marche · jouer avec le son';
     buttons.get('8:16')!.disabled=false;
+    if(practiceActive)practice?.refreshToyButtons();
     message('Prête ! Appuie sur Marche pour jouer avec le son.');
   }catch(e){message((e as Error).message+' Recharge la page pour réessayer.',true);start.textContent='Démarrage interrompu';}
   finally{forget.disabled=false;}
@@ -95,7 +104,7 @@ async function activate(){
     // Called in the click/tap handler after the silent preparation, preserving user activation.
     const resume=engine.enableAudio();
     modernVoice?.setVolume(Number(volume.value)/100);
-    await resume;modernVoice?.setEnabled(true);ready=true;
+    await resume;modernVoice?.setEnabled(!practiceActive);ready=true;
     for(const button of buttons.values())button.disabled=false;
     audio.hidden=true;reset.disabled=false;start.textContent='La Dictée est allumée';
     $('.controls h2').textContent='À toi de jouer.';
@@ -134,6 +143,11 @@ const mappings=new Map(KEYS.map(spec=>[spec.keyboard,spec]));
 mappings.set('Delete',mappings.get('Backspace')!);mappings.set('Home',mappings.get('1')!);mappings.set('F1',mappings.get('9')!);
 window.addEventListener('keydown',e=>{
   const target=e.target as HTMLElement;
+  if(practiceActive){
+    if(practice?.handleKeyboard(e))e.preventDefault();
+    else {const native=target.closest<HTMLElement>('button,summary,a');if(native&&!target.matches('input,textarea,select')&&['Enter',' '].includes(e.key)){e.preventDefault();if(!e.repeat)native.click();}}
+    e.stopImmediatePropagation();return;
+  }
   if(target.matches('input,textarea,select')||e.ctrlKey||e.altKey||e.metaKey){e.stopImmediatePropagation();return;}
   const nativeControl=target.closest<HTMLElement>('button,summary,a');
   if(nativeControl&&['Enter',' '].includes(e.key)){
@@ -147,3 +161,10 @@ window.addEventListener('keydown',e=>{
 window.addEventListener('keyup',e=>{release('keyboard:'+e.code);e.stopImmediatePropagation();},true);
 window.addEventListener('blur',releaseAll);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseAll();});
+
+setupCartridges();
+practice=setupPractice({
+  modeChanged(active){practiceActive=active;releaseAll();modernVoice?.cancel();modernVoice?.setEnabled(!active&&ready);if(active)engine.volume(0);else for(const button of buttons.values())button.disabled=!ready;},
+  getVolume:()=>Number(volume.value)/100,
+  setVolume(value){volume.value=String(Math.round(value*100));modernVoice?.setVolume(value);}
+});

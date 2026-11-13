@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "lists": [
+    {
+      "title": "Ma semaine",
+      "entries": [
+        { "text": "une étoile" },
+        { "text": "la maison" },
+        { "text": "ses", "context": "Il range ses jouets." }
+      ]
+    }
+  ]
+}

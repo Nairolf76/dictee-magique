@@ -134,3 +134,83 @@ MAME ne propose pas cette ROM dans son catalogue officiel de téléchargements.
 Aucun téléchargement tiers automatique ni hébergement de ROM n’est ajouté.
 Les quatre variantes de réussite du programme français ont des félicitations
 modernes distinctes. Le canal audio original reste coupé en mode moderne.
+
+
+## Listes personnelles
+
+L’onglet **Mes listes de révision** fonctionne sans ROM. Créer, modifier, dupliquer ou
+supprimer une liste ; la saisie rapide accepte une expression par ligne. Les
+articles, espaces et accents sont conservés : « la mère », « les cheveux ».
+Chaque expression peut recevoir une phrase de contexte, lue mais non demandée
+dans la réponse. Les voix locales fr-CA sont proposées en priorité, puis les
+autres voix françaises locales. Une voix en ligne est signalée explicitement.
+La sélection manuelle des voix modernes et le volume sont partagés avec le jouet.
+
+Choisir une ou plusieurs listes, Entraînement ou Dictée blanche, réponse au
+clavier ou sur papier. Les mots sont mélangés par défaut. En entraînement,
+deux essais sont permis ; l’aide révèle la réponse et la compte « à revoir ».
+La dictée blanche garde les corrections pour le bilan. Sur papier, les résultats
+sont renseignés manuellement. Le bilan distingue premier essai, nouvel essai et
+mots à revoir ; seuls ces derniers peuvent être rejoués.
+
+La comparaison accepte la casse, les espaces superflus, les caractères Unicode
+équivalents et les apostrophes droites ou typographiques. Elle exige les accents,
+les articles et le pluriel : « ou » et « où », « bleu » et « bleue » restent distincts.
+
+La séance est commune à l’espace révision et à la façade du jouet. Le champ
+complet, la touche Espace et la palette d’accents permettent les expressions
+longues. Départ avance, Répète relit, Essaie valide, Efface corrige et Aide révèle
+la réponse en entraînement. Les commandes historiques sans équivalent sont
+désactivées. Le changement de présentation conserve la séance ; revenir au jeu
+original met la révision en pause. MAME reste muet et ne reçoit aucune saisie
+pendant les exercices personnels. La frappe n’épelle pas les lettres.
+
+### Importer et sauvegarder
+
+Les modèles publics sont disponibles dans l’interface et dans
+`public/templates/modele-listes.csv` et `public/templates/modele-listes.json`.
+CSV UTF-8 : colonnes `liste;texte;contexte`, séparateur point-virgule ou virgule,
+champs entre guillemets, guillemets doublés et fins de ligne Windows acceptés.
+JSON version 1 :
+
+```json
+{"version":1,"lists":[{"title":"Semaine 1","entries":[{"text":"une étoile","context":"Une étoile brille dans le ciel."}]}]}
+```
+
+L’aperçu précède l’ajout de nouvelles copies ; aucun remplacement silencieux.
+Les doublons sont signalés et conservés. Maximum 2 Mo par import, 100 listes et
+500 entrées par liste. Une erreur rejette l’ensemble du fichier. Exporter une
+liste ou toute la bibliothèque produit ce même JSON, sans ROM, voix ou résultats.
+
+La base IndexedDB existante est migrée de v1 à v2 sans effacer la ROM. Listes,
+préférences, dernier bilan par liste et cartouches sont séparés. Aucun profil
+d’enfant ni historique détaillé. Si le stockage est refusé, les listes restent
+utilisables en mémoire et exportables pendant la session. Le navigateur peut
+effacer ses données : conserver des exports pour les sauvegardes. Pas de
+synchronisation entre appareils ni d’envoi au serveur applicatif.
+
+## Cartouches françaises
+
+Le panneau **Cartouches françaises** reconnaît les modules nº 1 Les Mots de Base,
+nº 2 Les Mots Difficiles et nº 4 Les Magasins de la Rue. Importer un ZIP ou une ROM
+brute : taille et SHA-1 officiels identifient le module indépendamment du nom.
+La ROM principale française reste nécessaire. Les cartouches importées sont
+mémorisées séparément et peuvent être effacées individuellement.
+
+Sélectionner le module, puis **Charger et redémarrer**. Après Marche, appuyer sur
+**Module**, choisir A/B/C/D, puis Départ. Le changement redémarre la page ; aucun
+remplacement à chaud. Le moteur charge le fichier dans son système de fichiers
+virtuel avec `-cart`, à l’adresse native 0x8000. Les voix modernes décodent les
+tables du module importé tout en conservant lettres et annonces de la ROM principale.
+Les vocabulaires ne sont pas distribués. MAME brut reste la référence pour la
+voix originale ; aucun traitement expérimental n’est appliqué.
+
+Les empreintes et sources sont décrites dans [les ressources](docs/resources.md).
+Les essais réels privés et leurs limites sont consignés dans
+[les vérifications](docs/verification.md). Aucun fichier scolaire personnel,
+photographie, ROM, cartouche ou audio extrait n’est inclus dans la distribution.
+
+
+## Marquages du jouet
+
+Les touches utilisent des pictogrammes SVG et les couleurs du clavier photographié. Le logo français et TI/Speak & Spell sont redessinés sur la partie basse jaune, suivant la variante Etsy de 1981. Les fontes système peuvent modifier légèrement la typographie selon l’appareil. Ces marques restent celles de leurs propriétaires ; les photographies de référence et les fontes ne sont pas distribuées. Voir docs/resources.md pour les références et limites de fidélité.

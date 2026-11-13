@@ -1,6 +1,6 @@
 import { readdir,readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-const forbidden = new Set(['a8bc118c83a84260033734191dcaa71a93dfa52b','2d127d98028ec8ec6ea10c179c25e447b14ba4d0','67b691e7c0b97239410587e50e5182bf46475b43','9a8ac690902731e1e01533279a1c9223011e1537','e16043766c385e152b7005c1c010be4c5fccdd9b']);
+const forbidden = new Set(['3bebf4370be3e6e5fff86d2ee27ff56f17368ba6','1d611f4a15d05f55f0da1773bddbfd64f2d63a49','479eaecaadb31bdd99e9bb0f424191ec554202bd','a8bc118c83a84260033734191dcaa71a93dfa52b','2d127d98028ec8ec6ea10c179c25e447b14ba4d0','67b691e7c0b97239410587e50e5182bf46475b43','9a8ac690902731e1e01533279a1c9223011e1537','e16043766c385e152b7005c1c010be4c5fccdd9b']);
 async function inspect(dir){
   for(const entry of await readdir(dir,{withFileTypes:true})){
     const path=new URL(entry.name+(entry.isDirectory()?'/':''),dir);

@@ -1,0 +1,61 @@
+/* Printed key art only. Preserve the existing ten-column, four-row matrix. */
+.toy-key[data-key-art] {
+  color: var(--toy-key-ink, #252622);
+  overflow: visible;
+}
+.toy-key .key-face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.toy-key .key-mark {
+  display: block;
+  width: 57%;
+  height: 57%;
+  fill: currentColor;
+  overflow: visible;
+}
+.toy-key .key-face-word {
+  font: 500 1.43cqw/1 Arial, Helvetica, sans-serif;
+  letter-spacing: -.025cqw;
+}
+.toy-key .legend.key-legend {
+  top: auto;
+  bottom: calc(100% + .48cqw);
+  left: -.65cqw;
+  right: -.65cqw;
+  color: var(--toy-legend-ink, #f5e85b);
+  font: 600 1.75cqw/1 Arial, Helvetica, sans-serif;
+  letter-spacing: -.035cqw;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.toy-key .key-legend span { display: block; }
+.toy-key .key-legend-double span:first-child {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + .68cqw);
+}
+.toy-key:nth-child(n+38) .legend.key-legend {
+  top: calc(100% + .52cqw);
+  bottom: auto;
+}
+.toy-key[data-key-art="7"] .key-mark { width: 65%; height: 65%; }
+.toy-key[data-key-art="2"] .key-mark { width: 62%; height: 62%; }
+.toy-key[data-key-art="5"] .key-mark { width: 55%; height: 62%; }
+
+/* Printed membrane palette sampled visually from the French 1981 reference. */
+.toy .keyboard{background:#229ed1}
+.toy .keyboard-frame{background:#ef4a27;border-color:#f27234}
+.toy-key[data-key-art]{background:linear-gradient(#ffad36,#f9a02c);box-shadow:inset 0 0 0 .19cqw #293237;font-weight:500}
+.toy-key.function[data-key-art]{background:linear-gradient(#f4542e,#ee4725)}
+.toy-key.vowel[data-key-art]{background:#f4e74b;box-shadow:inset 0 0 0 .15cqw #faf28e}
+.toy-key[data-key-art]:active,.toy-key[data-key-art].down{filter:brightness(.92)}
+
+/* Module print index */
+.toy-key[data-key-art="0"] .key-legend::after{content:"2";position:absolute;top:calc(100% + .35cqw);left:0;right:0;font-size:1.3cqw;line-height:1;color:#f5e85b}

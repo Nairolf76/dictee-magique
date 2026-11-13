@@ -16,3 +16,8 @@ La licence MIT du projet ne remplace aucune de ces licences. Lors d'une distribu
 du moteur compilé, fournir les notices et le code source correspondant, comprenant
 les modifications du pont décrites par `scripts/patch-mame.py`, selon les conditions
 applicables. Aucune ROM Texas Instruments n'est concédée sous une licence libre ici.
+
+
+## Reconstitutions des marquages
+
+Les noms et logos La Dictée magique, Texas Instruments, TI et Speak & Spell identifient leurs propriétaires respectifs. Les reconstitutions SVG ne sont pas des fichiers officiels et les marques sont exclues de la licence MIT du code original. Aucune photographie ni police de caractères tierce n’est redistribuée. Les fichiers SVG utilisent les polices système disponibles.

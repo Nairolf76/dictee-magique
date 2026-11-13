@@ -145,3 +145,70 @@ Planet Emulation. Cette fiche indique une archive merged snspell.zip ; le nom
 n’est pas un critère de validation. Aucun téléchargement automatique ni fichier
 ROM ajouté au site. Contrôle du lien et de l’aide dépliée sur bureau et mobile
 Chromium simulé (390 × 844) : aucun débordement ni erreur applicative.
+
+
+## Cartouches et listes personnelles — 12 novembre 2026
+
+59 tests automatisés passent, dont les anciennes régressions. Le build TypeScript,
+les empreintes du moteur et l’audit de distribution passent. Pas de nouvelle
+dépendance ; versions et verrou npm conservés.
+
+Les trois fichiers privés ont été identifiés par taille et SHA-1 officiels :
+
+| Cartouche | Mots décodés | Série originale | Répétition | Voix moderne fr-CA |
+| --- | ---: | --- | --- | --- |
+| motsbase | 132 | 10/10 | Réussie | Mot + répétition terminés, gain MAME nul |
+| motsdiff | 212 | 10/10 | Réussie | Mot + répétition terminés, gain MAME nul |
+| magasrue | 171 | 10/10 | Réussie | Mot + répétition terminés, gain MAME nul |
+
+Essais réels sur le même moteur MAME WebAssembly publié : chargement natif -cart,
+Marche, Module, niveau A, dix réponses correctes continues par cartouche,
+félicitations et retour en fin de série. Les adresses émises par MAME correspondent
+aux tables vocales à partir de 0x8000. Les annonces et les lettres restent celles
+de la ROM principale. Les deux modules plus récents n’exigent pas le bit haut du
+premier caractère ; un test synthétique couvre cette différence. Les tests natifs
+respectent les pauses de parole entre touches. La synthèse moderne réelle est
+Microsoft Caroline fr-CA, avec événements de fin et répétition vérifiés. La qualité
+acoustique reste celle de MAME et des voix du système ; pas de traitement audio.
+
+Imports UI ZIP et ROM brute des trois modules validés ; effacer un module laisse
+la ROM principale, les autres modules et les listes intacts. Les fichiers privés
+et leurs journaux contenant du vocabulaire restent hors du dépôt et du site.
+
+Parcours testés dans Chromium sous Windows, bureau 1440 × 1000 et mobile simulé
+390 × 844. Plugin Browser indisponible : Playwright existant utilisé, sans
+installation de navigateur ou de dépendances. Vite localhost puis build statique
+sous /dictee-magique/. Aucun écran blanc, overlay d’erreur, débordement horizontal
+mobile ou erreur applicative de page dans les parcours finaux.
+
+| Vérification | Résultat |
+| --- | --- |
+| CSV UTF-8, CRLF, virgule/point-virgule, guillemets, contexte, accents | Passée |
+| JSON v1, aller-retour, contenus uniquement, doublons signalés | Passée |
+| Version inconnue, données invalides, limites 2 Mo/500 entrées | Passée, refus sans ajout partiel |
+| Création, modification, duplication, aperçu et export | Passée |
+| Migration IndexedDB v1 → v2 avec vraie ROM mémorisée | Passée, ROM conservée |
+| Rechargement et suppressions séparées | Passée |
+| Stockage refusé | Listes en session, export et exercice utilisables |
+| Entraînement clavier | Deux essais, aide, correction, bilan, reprise des erreurs |
+| Dictée blanche clavier | Réponses enregistrées sans correction avant le bilan |
+| Entraînement / dictée blanche sur papier | Correction au bon moment et auto-évaluation |
+| Accents, articles, pluriels, apostrophes et Unicode | Distinctions exigées, tolérances normalisées |
+| Vues révision / jouet et plein écran | Séance et réponse conservées, pause/reprise vérifiées |
+| Séparation des moteurs | Aucun appui MAME pendant la révision, gain nul puis restauré |
+| Voix locale fr-CA puis sélection fr-FR | Vérifiées, choix moderne partagé |
+| Absence de voix française et erreur de synthèse | Message clair ; réessai explicite possible |
+| Parcours tactile et palette d’accents | Passés, champ complet et clavier natif |
+| Modèles publics dans le sous-dossier de déploiement | HTTP 200, données génériques uniquement |
+
+La dictée personnelle ne contient ni apprentissage du cursif ni reconnaissance
+manuscrite. Les tests mobiles sont simulés : Safari/iPhone et un appareil physique
+restent à vérifier. Les voix disponibles et leur prononciation varient selon le
+système. Un navigateur peut effacer IndexedDB : l’export reste la sauvegarde.
+
+
+## Façade redessinée — 12 novembre 2026
+
+Pictogrammes vectoriels des dix touches de fonction, légendes jaunes, fonctions rouges, lettres orange et voyelles jaunes comparés aux photos Etsy. Le logo français, la main magique, les étoiles et le bloc TI/Speak & Spell sont replacés en bas de la façade, selon une seule variante historique. Aucun fichier photo ni fonte tierce embarqué. La typographie repose sur les fontes système et les contours de marques sont des approximations visuelles, pas des fichiers officiels.
+
+Contrôles Chromium bureau et mobile simulé : quarante touches et leurs noms accessibles conservés, dix pictogrammes SVG, actions de révision et champs complets opérationnels ; plein écran et absence de débordement vérifiés. Les deux SVG sont servis depuis le sous-dossier /dictee-magique/ sans requête de fonte externe.

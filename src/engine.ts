@@ -15,7 +15,7 @@ export class DicteeEngine {
   private ready = false;
   public readonly log: string[] = [];
   constructor(private canvas: HTMLCanvasElement, private digit: (index: number, mask: number) => void, private speech: (address:number)=>void = ()=>{}) {}
-  start(zip: Uint8Array): Promise<void> {
+  start(zip: Uint8Array, cartridge?: Uint8Array): Promise<void> {
     if (this.started) return Promise.reject(new Error('Rechargez la page pour charger une autre ROM.'));
     this.started = true;
     return new Promise((resolve, reject) => {
@@ -35,9 +35,10 @@ export class DicteeEngine {
           try {
             const m = window.Module;
             m.FS.mkdirTree('/roms'); m.FS.writeFile('/roms/snspellfr.zip', zip);
+            if(cartridge)m.FS.writeFile('/roms/module.bin',cartridge);
             this.key = m.cwrap('dm_key', 'number', ['number', 'number', 'number']);
             this.resetMachine = m.cwrap('dm_reset', null, []);
-            m.callMain(['snspellfr', '-rompath', '/roms', '-skip_gameinfo', '-noreadconfig', '-nowriteconfig', '-window', '-video', 'soft', '-sound', 'js']);
+            m.callMain(['snspellfr', '-rompath', '/roms', '-skip_gameinfo', '-noreadconfig', '-nowriteconfig', '-window', '-video', 'soft', '-sound', 'js', ...(cartridge?['-cart','/roms/module.bin']:[])]);
           } catch(e) { fail(e); }
         }
       } as unknown as Module;

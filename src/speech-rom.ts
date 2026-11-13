@@ -59,3 +59,26 @@ export function decodeSpeechDictionary(rom: Uint8Array) {
   if(!wordCount||wordCount>256)throw new Error('Nombre de mots incorrect.');
   return {cues,wordCount};
 }
+
+/** Cartridge pointers may include the VSM bank. Only words override the base dictionary. */
+export function decodeCartridgeDictionary(rom:Uint8Array,base=0x8000){
+  if(rom.length!==16384)throw new Error('Mémoire de cartouche incorrecte.');
+  const view=new DataView(rom.buffer,rom.byteOffset,rom.byteLength);
+  const local=(p:number)=>{const n=p>=base?p-base:p;if(n<0||n>=rom.length)throw new Error('Pointeur cartouche hors ROM.');return n;};
+  const read=(p:number)=>{p=local(p);if(p+1>=rom.length)throw new Error('Pointeur cartouche tronqué.');return view.getUint16(p,true);};
+  const cues=new Map<number,SpeechCue>();let wordCount=0;
+  for(let level=0;level<4;level++){
+    const count=rom[level];if(!count)continue;const table=local(read(4+level*2));
+    if(table+count*2>rom.length)throw new Error('Table cartouche hors ROM.');
+    for(let i=0;i<count;i++){
+      let p=local(read(table+i*2)),text='',ended=false;
+      // Modules 2 and 4 omit the optional high bit on their first letter.
+      for(let j=0;j<8;j++){if(p>=rom.length)throw new Error('Mot cartouche tronqué.');const b=rom[p++],letter=b&31;if(letter>25)throw new Error('Lettre cartouche incorrecte.');text+=String.fromCharCode(97+letter);if(b&64){ended=true;break;}}
+      if(!ended)throw new Error('Fin de mot cartouche absente.');
+      const address=local(read(p)),cue:SpeechCue={text,kind:'word'};cues.set(base+address,cue);
+      if(address+4<rom.length&&[address+4,base+address+4].includes(read(address))&&read(address+2)===1)cues.set(base+address+4,cue);
+      wordCount++;
+    }
+  }
+  if(!wordCount)throw new Error('Aucun mot dans cette cartouche.');return{cues,wordCount};
+}

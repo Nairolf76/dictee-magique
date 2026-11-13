@@ -45,3 +45,51 @@ indique une archive merged snspell.zip regroupant les variantes. Le lien présen
 dans l’aide ouvre cette fiche tierce ; aucun téléchargement n’est automatisé.
 La disponibilité publique n’établit pas un droit de redistribution. Le projet
 ne fournit, ne copie et n’héberge pas la ROM. Consultation : 11 novembre 2026.
+
+
+## Cartouches françaises
+
+Source officielle des empreintes : [MAME 0.289, liste snspell](https://github.com/mamedev/mame/blob/mame0289/hash/snspell.xml).
+Chaque module français occupe 16 384 octets. Le pilote utilise le connecteur de
+cartouche natif et la banque vocale à partir de 0x8000.
+
+| Module | Fichier | SHA-1 |
+| --- | --- | --- |
+| Nº 1 Les Mots de Base | cd2353 | 3bebf4370be3e6e5fff86d2ee27ff56f17368ba6 |
+| Nº 2 Les Mots Difficiles | cd62177a | 1d611f4a15d05f55f0da1773bddbfd64f2d63a49 |
+| Nº 4 Les Magasins de la Rue | cd62048 | 479eaecaadb31bdd99e9bb0f424191ec554202bd |
+
+Les fichiers utilisés uniquement pour les essais locaux proviennent de la
+[collection publique MAME 0.228 Software List ROMs merged](https://archive.org/details/MAME_0.228_Software_List_ROMs_merged),
+répertoires snspell/motsbase.zip, motsdiff.zip et magasrue.zip. Les trois SHA-1
+correspondent à la liste officielle. Consultation : 12 novembre 2026.
+Une autre collection, mame-sl, demande une connexion et n’a pas été utilisée.
+La mise à disposition publique n’établit aucun droit de redistribution : ces
+fichiers restent privés, hors Git et hors site. Aucun lien de téléchargement
+automatique n’est ajouté à l’application.
+
+Les tableaux de mots sont décodés depuis les cartouches importées, sans copie
+statique de leur vocabulaire. Les modules 2 et 4 omettent le marqueur haut du
+premier caractère présent sur le module 1 ; leurs pointeurs incluent 0x8000.
+Les voix modernes sont celles du système ou du navigateur et ne sont pas fournies.
+
+Les modèles de listes publics sont des exemples génériques créés pour le projet.
+La photo scolaire et sa transcription privée ne sont pas des ressources du dépôt.
+
+
+## Marquages de la façade
+
+Les pictogrammes et logos redessinés suivent les
+[photos Etsy de RetroCite fournies par l’utilisateur](https://www.etsy.com/listing/4505314086/vintage-texas-instruments-la-dictee).
+Consultation : 12 novembre 2026. Les photos restent hors du dépôt et ne sont pas
+redistribuées. La photo Facebook complémentaire montre une autre variante de
+marquage ; la façade Etsy est retenue pour garder une version cohérente.
+
+Les pictogrammes sont dessinés en SVG ; les marques commerciales et silhouettes
+de logos sont des reconstitutions visuelles, pas des fichiers maîtres officiels.
+La typographie utilise uniquement des fontes système (Cooper Black si présente,
+puis Georgia/serif, Times et Arial). Aucun fichier de fonte, glyphe extrait ou
+photo n’est embarqué. L’aspect des lettres peut varier selon les fontes installées.
+Les noms, logos et marques Texas Instruments/Speak & Spell ne sont pas couverts
+par la licence MIT du code. La main, les étoiles et les proportions restent des
+approximations des impressions photographiées.

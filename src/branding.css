@@ -1,0 +1,11 @@
+/* French 1981 faceplate: the wordmarks are printed on the lower yellow field.
+   Self-contained vector artwork; it scales with the object and both toy modes. */
+.toy .ti-wordmark{display:none}
+.toy .yellow-panel{padding-bottom:1.8cqw}
+.toy-brandpanel{display:grid;grid-template-columns:61% 35%;gap:4%;align-items:end;height:21cqw;margin:1.8cqw 1.4cqw 0;position:relative}
+.toy .toy-brand{position:static;display:block;width:100%;height:auto;max-height:21cqw;object-fit:contain;margin:0;transform:none;filter:none;text-shadow:none}
+.toy-manufacturer{display:block;width:100%;height:auto;max-height:15cqw;object-fit:contain;margin:0 0 .5cqw}
+.toy-brandpanel::before{content:'© TI 1981';position:absolute;left:1.2cqw;top:-1.35cqw;font:1.05cqw Arial,Helvetica,sans-serif;color:#257693;letter-spacing:.03cqw;white-space:nowrap}
+/* .toy is moved between the original and personal practice stages by practice-ui.
+   This is ordinary flow content, so the input overlay can keep its position. */
+@media(max-width:700px){.toy .toy-brand{margin:0}}
