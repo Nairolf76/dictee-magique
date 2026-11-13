@@ -1,19 +1,20 @@
 <!doctype html>
 <html lang="fr">
-<head><link rel="icon" href="data:,"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#eee9dc"><meta name="description" content="Retrouvez La Dictée magique de 1981 dans votre navigateur. Une réplique française avec le programme et la voix du jouet original."><title>La Dictée magique · 1981</title>  <script type="module" crossorigin src="./assets/index-DDZvf5Qz.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-UamUV1jH.css">
+<head><link rel="icon" href="data:,"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#eee9dc"><meta name="description" content="Retrouvez La Dictée magique de 1981 dans votre navigateur. Une réplique française avec le programme et la voix du jouet original."><title>La Dictée magique · 1981</title>  <script type="module" crossorigin src="./assets/index-QeSbQjzP.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Dd-P8wE9.css">
 </head>
 <body>
 <a class="skip-link" href="#controls">Passer aux commandes</a>
 <header class="page-header"><a class="collection" href="./" aria-label="La Dictée magique, accueil"><span class="collection-mark">dm.</span><span>LES OBJETS<br>QUI PARLENT</span></a><span class="edition">ÉDITION FRANÇAISE <span>—</span> 1981</span><a href="#about" class="about-link">À propos <span>↗</span></a></header>
-<main>
+<nav class="mode-tabs" role="tablist" aria-label="Choisir une activité"><button id="mode-toy" role="tab" aria-selected="true" aria-controls="toy-app">La Dictée originale</button><button id="mode-practice" role="tab" aria-selected="false" aria-controls="practice-app">Mes listes de révision</button></nav>
+<main id="toy-app" role="tabpanel">
 <div class="intro"><span class="eyebrow">UN PETIT VOYAGE DANS LES ANNÉES 80</span><h1>Tu joues. <em>Je parle.</em></h1><p>La voix, les touches, les souvenirs. À toi de jouer.</p></div>
 <div class="experience">
 <section class="stage" aria-label="Réplique de La Dictée magique">
 <div class="toy" id="toy" tabindex="-1">
 <div class="handle" aria-hidden="true"></div>
-<div class="fascia"><div class="speaker" aria-hidden="true"></div><div class="display-panel"><div class="display" id="display" role="img" aria-label="Afficheur à huit caractères du jouet"></div><span class="ti-wordmark">TEXAS INSTRUMENTS</span></div></div>
-<div class="yellow-panel"><div class="keyboard-frame"><div class="keyboard" id="keys" role="group" aria-label="Clavier du jouet"></div></div><div class="toy-brand" aria-label="La Dictée magique"><span>La Dictée</span><strong>Magique</strong><i aria-hidden="true">✧</i></div><div class="toy-caption">Speak & Spell™</div></div><div class="case-seam" aria-hidden="true"></div>
+<div class="fascia"><div class="speaker" aria-hidden="true"></div><div class="display-panel"><div class="display" id="display" role="img" aria-label="Afficheur à huit caractères du jouet"></div></div></div>
+<div class="yellow-panel"><div class="keyboard-frame"><div class="keyboard" id="keys" role="group" aria-label="Clavier du jouet"></div></div><div class="toy-brandpanel"><img class="toy-brand" src="./brand/la-dictee-magique.svg" alt="La Dictée Magique" width="610" height="218"><img class="toy-manufacturer" src="./brand/texas-speak-spell.svg" alt="Texas Instruments — Speak &amp; Spell" width="305" height="148"></div></div><div class="case-seam" aria-hidden="true"></div>
 </div>
 <div class="object-note"><span class="note-line"></span> TEXAS INSTRUMENTS · LA DICTÉE MAGIQUE <span class="note-line"></span></div>
 </section>
@@ -32,11 +33,12 @@
 <button id="fullscreen" class="text-button fullscreen-entry" aria-pressed="false">⛶ &nbsp; Plein écran</button>
 <button id="reset" class="text-button" disabled>↻ &nbsp; Recommencer</button>
 <details class="guide" open><summary>La règle du jeu <span aria-hidden="true">＋</span></summary><ol><li>Choisis un niveau avec <b>A, B, C ou D</b>.</li><li>Appuie sur <b>Départ</b>, puis écoute le mot.</li><li>Écris-le et valide avec <b>Essaie</b>.</li></ol><p>Une hésitation ? Appuie sur <b>Répète</b>.<br>Attends la fin de la voix entre deux commandes.</p></details>
-<details class="guide"><summary>Clavier et autres jeux <span aria-hidden="true">＋</span></summary><p>Utilise les lettres de ton clavier. <b>Entrée</b> = Essaie, <b>Retour arrière</b> = Efface, <b>1</b> = Départ, <b>3</b> = Répète, <b>9</b> = Marche et <b>F2</b> = Arrêt.</p><p>Les touches Mot mystère, Code secret, Lettre et Dis-le donnent accès aux autres jeux. Les modules supplémentaires ne sont pas inclus.</p></details>
+<details class="guide"><summary>Clavier et autres jeux <span aria-hidden="true">＋</span></summary><p>Utilise les lettres de ton clavier. <b>Entrée</b> = Essaie, <b>Retour arrière</b> = Efface, <b>1</b> = Départ, <b>3</b> = Répète, <b>9</b> = Marche et <b>F2</b> = Arrêt.</p><p>Les touches Mot mystère, Code secret, Lettre et Dis-le donnent accès aux autres jeux. Les cartouches françaises s’importent séparément dans le panneau Cartouches françaises.</p></details>
 </aside>
 </div>
 <section id="about" class="about"><p class="eyebrow">UNE PETITE CAPSULE TEMPORELLE</p><h2>Une machine. Des centaines de souvenirs.</h2><p>Une réplique non officielle du modèle français de 1981, redessinée pour le web. Son programme original est exécuté par MAME, avec la voix d’époque ou une voix moderne au choix. Code original sous licence MIT ; ROM non fournie. Sans compte ni suivi.</p><p class="fine-print">Texas Instruments et Speak & Spell sont des marques de leurs propriétaires. Projet indépendant, sans affiliation. Le moteur MAME signale une émulation sonore imparfaite.</p><p class="fine-print"><a href="https://github.com/Nairolf76/dictee-magique">Sources et licences</a> · <a href="licenses/mame/COPYING">Licence du moteur</a></p></section>
 </main>
+<main id="practice-app" role="tabpanel" hidden></main>
 <footer><span>FABRIQUÉ POUR LE PLAISIR DE RETROUVER.</span><span>1981 ↔ 2026</span></footer>
 <button id="leave-fullscreen" class="leave-fullscreen" type="button" aria-label="Quitter le plein écran (Échap)" title="Quitter le plein écran · Échap" hidden>⤡</button>
 <canvas id="canvas" class="engine-canvas" width="640" height="220" tabindex="-1" aria-hidden="true"></canvas>
