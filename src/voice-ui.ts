@@ -1,16 +1,13 @@
+import {browserSpeechBackend} from './text-speaker';
 import {onVoicesChanged} from './speech-events';
-import {ModernVoice,type SpeechJob} from './modern-voice';
+import {ModernVoice} from './modern-voice';
 export function setupVoiceControls(gain:(value:number)=>void,busy:(value:boolean)=>void,notify:(text:string)=>void){
   const select=document.querySelector<HTMLSelectElement>('#voice')!;
   const preview=document.querySelector<HTMLButtonElement>('#preview-voice')!;
   const note=document.querySelector<HTMLElement>('#voice-note')!;
   const synthesis=window.speechSynthesis;
   let voices:SpeechSynthesisVoice[]=[];
-  const player=new ModernVoice({
-    create:text=>new SpeechSynthesisUtterance(text) as unknown as SpeechJob,
-    speak:job=>synthesis.speak(job as unknown as SpeechSynthesisUtterance),
-    cancel:()=>synthesis?.cancel()
-  },gain,busy,()=>{
+  const player=new ModernVoice(browserSpeechBackend(),gain,busy,()=>{
     note.textContent='Cette voix n’a pas répondu. Le son d’origine reste coupé.';
     notify('Réessaie avec Écouter ou choisis une autre voix.');
   });

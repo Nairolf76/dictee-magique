@@ -28,3 +28,5 @@ body.immersive .toy{transform:none;max-width:none}
 [hidden]{display:none!important}
 
 .rom-help{margin:12px 0 16px}.rom-help a{font-weight:700;text-underline-offset:3px}
+
+.audio-help textarea{width:100%;margin-top:8px;padding:8px;background:var(--paper);border:1px solid var(--line);font:11px/1.5 monospace;resize:vertical}.audio-help #copy-audio-diagnostic{padding-bottom:0}

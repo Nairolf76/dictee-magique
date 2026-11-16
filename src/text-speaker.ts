@@ -1,5 +1,5 @@
 import type {SpeechBackend,SpeechJob} from './modern-voice.js';
-export const browserSpeechBackend=():SpeechBackend=>({create:text=>new SpeechSynthesisUtterance(text) as unknown as SpeechJob,speak:job=>speechSynthesis.speak(job as unknown as SpeechSynthesisUtterance),cancel:()=>window.speechSynthesis?.cancel()});
+export const browserSpeechBackend=():SpeechBackend=>({create:text=>new SpeechSynthesisUtterance(text) as unknown as SpeechJob,speak:job=>speechSynthesis.speak(job as unknown as SpeechSynthesisUtterance),cancel:()=>window.speechSynthesis?.cancel(),resume:()=>window.speechSynthesis?.resume()});
 export class TextSpeaker {
   private generation=0;private timer:ReturnType<typeof setTimeout>|undefined;
   private job:SpeechJob|undefined;
@@ -10,6 +10,6 @@ export class TextSpeaker {
     const job=this.backend.create(text);this.job=job;job.voice=voice;job.lang=voice.lang;job.volume=volume;job.rate=1;
     const finish=(error:boolean)=>{if(generation!==this.generation)return;clearTimeout(this.timer);this.timer=undefined;this.job=undefined;if(error){this.generation++;this.backend.cancel();}finished(error);};
     job.onend=()=>finish(false);job.onerror=()=>finish(true);this.timer=setTimeout(()=>finish(true),20000);
-    try{this.backend.speak(job);}catch{finish(true);}
+    try{this.backend.resume?.();this.backend.speak(job);}catch{finish(true);}
   }
 }

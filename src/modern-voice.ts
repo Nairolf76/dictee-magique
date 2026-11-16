@@ -1,7 +1,7 @@
 import type {SpeechCue} from './speech-rom.js';
 import {TextSpeaker} from './text-speaker.js';
 export interface SpeechJob {text:string;voice?:SpeechSynthesisVoice;lang?:string;volume?:number;rate?:number;onend:(()=>void)|null;onerror:(()=>void)|null}
-export interface SpeechBackend {create(text:string):SpeechJob;speak(job:SpeechJob):void;cancel():void}
+export interface SpeechBackend {create(text:string):SpeechJob;speak(job:SpeechJob):void;cancel():void;resume?():void;resume?():void}
 export class ModernVoice {
   private dictionary=new Map<number,SpeechCue>();private voice:SpeechSynthesisVoice|null=null;
   private enabled=false;private unavailable=false;private volume=.7;private speaker:TextSpeaker;
@@ -19,6 +19,7 @@ export class ModernVoice {
     this.gain(0);if(this.unavailable)return;
     const cue=this.dictionary.get(address);if(cue?.text.trim())this.say(cue.text);
   }
+  recover(){this.cancel();this.unavailable=false;this.applyGain();}
   preview(){if(this.voice){this.unavailable=false;this.say('Bonjour ! Écris les mots que je vais te dicter.');}}
   private say(text:string){
     this.cancel();this.gain(0);this.busy(true);

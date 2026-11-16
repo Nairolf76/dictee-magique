@@ -251,3 +251,53 @@ changement de présentation fonctionnels.
 Limite : ce test reproduit les fonctionnalités manquantes, pas l’intégralité de
 WebKit/iPadOS ni ses performances matérielles. Le résultat devra être confirmé sur
 l’iPad physique ; WebKit ancien n’est pas disponible dans l’environnement de test.
+
+
+## Coupure audio sur iPad — 15 novembre 2026
+
+Signalement : le jeu continue à réagir après la perte de son ; un simple rechargement
+ne suffit pas, mais une voix moderne fonctionne dans un nouvel onglet Safari.
+Cela situe le blocage dans la session audio de l’onglet, sans établir à lui seul
+la cause exacte sur l’appareil.
+
+Deux défauts indépendants ont été reproduits :
+
+- Une fois ready=true, l’ancien bouton Audio rappelait activate(), qui quittait
+  immédiatement. Le bouton était de plus caché après le premier démarrage. Une
+  interruption native n’avait donc pas de commande applicative de reprise.
+- Dans le shim audio du moteur figé, tick() accède à l’index 44099 d’un canal de
+  4096 échantillons quand le tampon circulaire est vide. La valeur undefined devient
+  NaN dans Float32Array. Exécution isolée du shim exact : 8192 valeurs invalides sur
+  un bloc stéréo vide. Le watchdog existant ne corrige pas ce cas, car tick() continue.
+
+Le rôle de ce second défaut dans le blocage de cet iPad reste à confirmer. La
+protection ajoutée capture seulement le contexte audio créé au démarrage MAME,
+restaure aussitôt les constructeurs globaux et protège ses ScriptProcessor, y compris
+ceux recréés par le watchdog. Elle remplace uniquement NaN et les infinis par zéro.
+Les données finies restent identiques octet pour octet. Aucun traitement de timbre,
+filtrage de la voix, fichier audio ou changement du binaire MAME n’est ajouté.
+
+Le bouton Réactiver le son reste disponible après Marche. Il relance le contexte,
+réveille la synthèse vocale et permet un nouvel essai après une erreur. Une reprise
+qui ne répond pas expire après trois secondes au lieu de bloquer le bouton. Les
+touches peuvent aussi reprendre un contexte interrompu. L’état et l’horloge audio
+sont surveillés, sans confondre un silence normal avec une panne. Une narration
+moderne en cours n’est pas annulée par cette reprise automatique.
+
+Son muet ? donne accès à un diagnostic copiable : état/horloge du contexte, volume,
+voix, file vocale et compteurs de protection. Aucun contenu ROM ou liste personnelle,
+aucune télémétrie et aucun envoi automatique. Si Safari garde l’onglet muet malgré la
+reprise, l’aide propose un nouvel onglet, ce qui a rétabli le son pour l’utilisateur.
+
+Validation : 76 tests TypeScript et 3 tests PostCSS réussis ; build, empreintes MAME
+et audit sans ROM réussis. Dans Chromium avec le vrai moteur : interruption forcée,
+reprise par bouton, promesse resume() bloquée puis nouvel essai, et tampon producteur
+volontairement vide vérifiés. 131072 échantillons invalides ont été remplacés pendant
+ce dernier essai ; le contexte a continué puis le son original a retrouvé une crête
+de 0,395 après remise du producteur. Une phrase fr-CA s’est terminée après reprise,
+avec gain original nul et TALK libéré. Essai dépassant une minute sans coupure.
+
+Ces contrôles ne remplacent pas l’essai sur l’iPad physique. Les interruptions
+Safari peuvent aussi concerner [l’état du contexte Web Audio](https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/state).
+L’attente initiale provient du chargement et de l’initialisation WebAssembly ; le
+message de préparation indique désormais explicitement les quelques secondes possibles.

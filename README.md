@@ -224,3 +224,17 @@ la fenêtre lorsque l’API native est indisponible. Le build cible explicitemen
 15.4 ; les navigateurs récents conservent les unités CSS natives. Les voix et les
 performances de MAME dépendent de l’appareil. La compatibilité de repli a été testée
 par simulation des API manquantes ; un essai sur l’iPad physique reste nécessaire.
+
+
+## Reprendre le son
+
+Après Marche, **Réactiver le son** reste disponible si le navigateur interrompt
+l’audio. Utiliser ensuite Répète ; avec une voix moderne, le bouton énonce aussi une
+phrase de vérification. Si l’onglet Safari reste muet, ouvrir le jeu dans un nouvel
+onglet. **Son muet ?** permet de copier un diagnostic local pour un signalement,
+sans ROM ni listes personnelles et sans envoi automatique.
+
+La sortie du moteur est protégée contre les valeurs non finies lors d’un tampon
+vide. Les échantillons valides ne sont pas modifiés ; MAME brut reste la référence.
+Le chargement et l’initialisation du moteur WebAssembly peuvent prendre quelques
+secondes, particulièrement au premier lancement sur un appareil ancien.

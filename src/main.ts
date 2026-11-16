@@ -1,3 +1,4 @@
+import {setupAudioRecovery} from './audio-ui';
 import {setupToySizing} from './toy-sizing';
 import { appendKeyArt } from './key-art';
 import {setupPractice} from './practice-ui';
@@ -31,6 +32,7 @@ modernVoice=setupVoiceControls(value=>engine.volume(practiceActive?0:value),valu
 const storage=new RomStorage();
 const forget=$<HTMLButtonElement>('#forget-rom');
 let ready=false, prepared=false, activating=false, importSequence=0;
+let audioRecovery:ReturnType<typeof setupAudioRecovery>|undefined;
 const buttons = new Map<string, HTMLButtonElement>();
 const input = new InputController((row, mask, down)=>{
   engine.setKey(row,mask,down);
@@ -39,6 +41,7 @@ const input = new InputController((row, mask, down)=>{
 const downAt=new Map<string,number>(), pending=new Map<string,number>();
 function press(id:string,row:number,mask:number) {
   if(!ready)return;
+  audioRecovery?.gesture();
   clearTimeout(pending.get(id));pending.delete(id);
   if(!downAt.has(id))downAt.set(id,performance.now());
   input.press(id,row,mask);
@@ -80,7 +83,7 @@ async function prepare(bytes:Uint8Array,restored:boolean,sequence:number) {
   }
   forget.hidden=!saved;forget.disabled=true;
   $('#storage-note').textContent=saved?'ROM mémorisée sur cet appareil. Aucun téléversement.':'Stockage indisponible : la ROM reste utilisable pour cette session.';
-  message('La Dictée se prépare en silence…');
+  message('Chargement et initialisation du moteur… Cela peut prendre quelques secondes sur cet appareil.');
   start.textContent='Chargement…';
   try{
     await engine.start(result.zip,cartridge?.bytes);prepared=true;
@@ -109,7 +112,7 @@ async function activate(){
     modernVoice?.setVolume(Number(volume.value)/100);
     await resume;modernVoice?.setEnabled(!practiceActive);ready=true;
     for(const button of buttons.values())button.disabled=false;
-    audio.hidden=true;reset.disabled=false;start.textContent='La Dictée est allumée';
+    audioRecovery?.start();reset.disabled=false;start.textContent='La Dictée est allumée';
     $('.controls h2').textContent='À toi de jouer.';
     message('Choisis un niveau avec A, B, C ou D, puis appuie sur Départ.');
   }catch(e){
@@ -118,7 +121,16 @@ async function activate(){
   }finally{activating=false;}
 }
 start.addEventListener('click',()=>void activate());
-audio.addEventListener('click',()=>void activate());
+audioRecovery=setupAudioRecovery({
+  active:()=>ready&&!practiceActive,
+  context:()=>engine.audioContext(),
+  resume:restart=>engine.enableAudio(restart),
+  restoreSpeech:()=>{modernVoice?.recover();window.speechSynthesis?.resume();},
+  previewSpeech:()=>modernVoice?.preview(),
+  activate,
+  diagnostics:()=>({...engine.audioSnapshot(),volume:Number(volume.value)/100,mode:practiceActive?'practice':'original'}),
+});
+import.meta.hot?.dispose(()=>audioRecovery?.dispose());
 forget.addEventListener('click',async()=>{
   forget.disabled=true;
   try{await storage.clear();modernVoice?.cancel();engine.volume(0);location.reload();}
