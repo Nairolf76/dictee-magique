@@ -9,7 +9,7 @@ afficheur à segments et synthèse vocale CD2801. Voix originale ou voix frança
 Prérequis : Node.js 22.12 ou supérieur, npm, et un navigateur récent avec WebAssembly et Web Audio.
 
 ```powershell
-Set-Location -LiteralPath 'C:\Dev\dictee-magique'
+Set-Location -LiteralPath 'C:\Dev\Projects\dictee-magique'
 npm ci
 node scripts/fetch-engine.mjs # ou compiler le moteur ci-dessous
 npm test
@@ -46,7 +46,7 @@ python3 scripts/export-engine.py /var/tmp/dictee-magique-build/mame
 ```
 
 Depuis PowerShell, les scripts du projet sont accessibles via
-`wsl -d Ubuntu -- bash /mnt/c/Dev/dictee-magique/scripts/setup-engine.sh`.
+`wsl -d Ubuntu -- bash /mnt/c/Dev/Projects/dictee-magique/scripts/setup-engine.sh`.
 La variable `DM_BUILD_ROOT` permet de choisir un autre répertoire de compilation.
 Utiliser la même valeur pour les deux scripts. Les scripts réutilisent les sources
 et les objets existants et ne suppriment aucun dossier.
@@ -214,3 +214,13 @@ photographie, ROM, cartouche ou audio extrait n’est inclus dans la distributio
 ## Marquages du jouet
 
 Les touches utilisent des pictogrammes SVG et les couleurs du clavier photographié. Le logo français et TI/Speak & Spell sont redessinés sur la partie basse jaune, suivant la variante Etsy de 1981. Les fontes système peuvent modifier légèrement la typographie selon l’appareil. Ces marques restent celles de leurs propriétaires ; les photographies de référence et les fontes ne sont pas distribuées. Voir docs/resources.md pour les références et limites de fidélité.
+
+
+## Anciens iPad
+
+L’interface dispose de replis pour Safari 15.4 et plus récent, dont iPadOS 15.8.x
+sur iPad Air 2 : dimensions du jouet, suivi des voix françaises et plein écran dans
+la fenêtre lorsque l’API native est indisponible. Le build cible explicitement Safari
+15.4 ; les navigateurs récents conservent les unités CSS natives. Les voix et les
+performances de MAME dépendent de l’appareil. La compatibilité de repli a été testée
+par simulation des API manquantes ; un essai sur l’iPad physique reste nécessaire.

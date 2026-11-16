@@ -1,6 +1,6 @@
 # Implémentation approuvée — 11 novembre 2026
 
-Objectif : une réplique française fidèle dans C:\Dev\dictee-magique, locale et prête
+Objectif : une réplique française fidèle dans C:\Dev\Projects\dictee-magique, locale et prête
 à publier, sans publier le dépôt ou la démo pendant cette intervention.
 
 1. Valider MAME 0.289 / Emscripten 3.1.74 avec la ROM française avant la façade.
