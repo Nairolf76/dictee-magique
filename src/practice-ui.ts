@@ -1,3 +1,4 @@
+import {onVoicesChanged} from './speech-events';
 import {appStore} from './storage';
 import {exportLists,importLists,materialize,validateLists,type ImportPreview,type WordList,type Entry} from './library';
 import {PracticeSession,itemsFromLists,type SessionOptions,type PracticeItem,type ListSummary} from './session';
@@ -46,7 +47,7 @@ export function setupPractice(bridge:Bridge){
     el<HTMLButtonElement>('practice-start').disabled=!voices.length;el<HTMLButtonElement>('practice-preview').disabled=!voices.length;
     el('practice-voice-note').textContent=!voices.length?'Aucune voix française disponible dans ce navigateur.':currentVoice()?.localService?'Voix du système, sans clé API.':'Cette voix du navigateur utilise Internet.';
   }
-  window.speechSynthesis?.addEventListener('voiceschanged',refreshVoices);
+  onVoicesChanged(window.speechSynthesis,refreshVoices);
   function rememberVoice(){speaker.cancel();preferredVoice=el<HTMLSelectElement>('practice-voice').value;void appStore.put('prefs','practiceVoice',preferredVoice).then(storageNote);refreshVoices();}
   el('practice-voice').addEventListener('change',()=>{rememberVoice();const original=el<HTMLSelectElement>('voice');if(Array.from(original.options).some(o=>o.value===preferredVoice)){original.value=preferredVoice;original.dispatchEvent(new Event('change'));}});
   el('voice').addEventListener('change',()=>{const value=el<HTMLSelectElement>('voice').value;if(voices.some(v=>v.voiceURI===value)){el<HTMLSelectElement>('practice-voice').value=value;rememberVoice();}});

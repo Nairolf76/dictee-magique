@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && node scripts/check-engine.mjs && vite build && node scripts/audit-dist.mjs",
-    "test": "tsc -p tsconfig.test.json && node --test .test-build/tests/*.test.js",
+    "test": "tsc -p tsconfig.test.json && node --test .test-build/tests/*.test.js && node tests/css-compat.test.mjs",
     "rom:check": "node scripts/check-rom.mjs",
     "start": "vite --host 127.0.0.1 --open",
     "preview": "vite preview --host 127.0.0.1"

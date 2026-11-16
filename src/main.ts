@@ -1,3 +1,4 @@
+import {setupToySizing} from './toy-sizing';
 import { appendKeyArt } from './key-art';
 import {setupPractice} from './practice-ui';
 import {setupCartridges,selectedCartridge} from './cartridge-ui';
@@ -20,6 +21,8 @@ const $ = <T extends HTMLElement>(selector: string) => document.querySelector<T>
 const status=$('#status'), start=$<HTMLButtonElement>('#start'), file=$<HTMLInputElement>('#rom');
 const audio=$<HTMLButtonElement>('#audio'), reset=$<HTMLButtonElement>('#reset'), volume=$<HTMLInputElement>('#volume');
 const display = new SegmentDisplay($('#display'));
+const stopToySizing=setupToySizing($('#toy'));
+import.meta.hot?.dispose(stopToySizing);
 let practiceActive=false;
 let practice:ReturnType<typeof setupPractice>|undefined;
 let modernVoice: ModernVoice | undefined;

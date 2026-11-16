@@ -1,3 +1,4 @@
+import {onVoicesChanged} from './speech-events';
 import {ModernVoice,type SpeechJob} from './modern-voice';
 export function setupVoiceControls(gain:(value:number)=>void,busy:(value:boolean)=>void,notify:(text:string)=>void){
   const select=document.querySelector<HTMLSelectElement>('#voice')!;
@@ -37,7 +38,7 @@ export function setupVoiceControls(gain:(value:number)=>void,busy:(value:boolean
       note.textContent='Aucune voix française disponible dans ce navigateur. Les voix proposées varient selon le navigateur et l’appareil.';
     }
   }
-  refresh();synthesis?.addEventListener('voiceschanged',refresh);
+  refresh();onVoicesChanged(synthesis,refresh);
   select.addEventListener('change',choose);
   preview.addEventListener('click',()=>player.preview());
   window.addEventListener('beforeunload',()=>player.cancel());

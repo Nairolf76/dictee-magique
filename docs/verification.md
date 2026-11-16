@@ -215,3 +215,39 @@ Contrôles Chromium bureau et mobile simulé : quarante touches et leurs noms ac
 
 
 Publication vérifiée le 12 novembre 2026 (heure locale) : https://nairolf76.github.io/dictee-magique/ ; sources 0272821, build Pages 6ea440f. Déploiement 43347034351 réussi. Les SVG et modèles répondent en HTTP 200. Exercice sans ROM, correction, import privé des six listes scolaires (50 entrées) et rechargement validés sur le site public ; aucune requête POST ni erreur applicative observée.
+
+
+## Safari sur les anciens iPad — 15 novembre 2026
+
+La capture de l’iPad Air 2 porte la version iPadOS 15.8.8. Le blocage au démarrage
+a été reproduit en présentant au programme une API speechSynthesis dépourvue de
+addEventListener : une exception interrompait la création des touches et empêchait
+l’installation du gestionnaire d’import de ROM. Le sélecteur de fichier s’ouvrait,
+mais la sélection du ZIP restait sans effet.
+
+Le suivi des voix utilise désormais EventTarget lorsqu’il existe, sinon le gestionnaire
+onvoiceschanged partagé par les deux sélecteurs. Les gestionnaires existants sont
+conservés. Le contrôle du ZIP, ses empreintes et sa conservation locale sont inchangés.
+
+Les unités cqw et les conteneurs CSS, arrivés dans [Safari 16](https://webkit.org/blog/13152/webkit-features-in-safari-16-0/),
+ne pouvaient pas dimensionner la coque et les touches sur Safari 15. Le build produit
+une déclaration de repli avant chaque longueur concernée. Un helper mesure la largeur
+utile du jouet et la suit en cas de rotation, de changement de présentation et de plein
+écran. Les navigateurs récents gardent les déclarations natives. Des replis vh sont
+aussi générés pour dvh. La cible du build applicatif est explicite : ES2020 / Safari 15.4.
+Aucune dépendance, ROM ou modification du binaire MAME n’a été ajoutée.
+
+Validation : 64 tests TypeScript et 3 tests PostCSS passent. Les nouvelles régressions
+couvrent les deux sélecteurs vocaux sans EventTarget, le nettoyage des abonnements,
+les variations de largeur et la génération des déclarations CSS. Build et audit sans
+ROM réussis. Chromium 768 × 1024 et 1024 × 768 avec les API vocales manquantes et les
+déclarations cqw/dvh/container-type retirées : 40 touches, ZIP français reconnu, moteur
+prêt puis allumé, plein écran de repli, déplacement du jouet et réponse complète dans
+une révision vérifiés. Pas d’erreur de page ni de débordement horizontal. Contrôle de
+régression sur navigateur récent réussi sur bureau 1440 × 1000 et mobile 390 × 844 :
+40 touches, aucun redimensionnement de repli sur moteur moderne, correction et
+changement de présentation fonctionnels.
+
+Limite : ce test reproduit les fonctionnalités manquantes, pas l’intégralité de
+WebKit/iPadOS ni ses performances matérielles. Le résultat devra être confirmé sur
+l’iPad physique ; WebKit ancien n’est pas disponible dans l’environnement de test.
